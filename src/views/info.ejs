@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kubenews</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Sans+3:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/main.css" />
+    <link rel="stylesheet" href="/styles/admin.css" />
+  </head>
+  <body>
+    
+      <%- include('./partial/header'); %>
+
+    <main>
+        <div class="post-form__container">
+            <h3 class="post-form__title"></h3>
+              <div class="post-form__group">
+                <label for="" class="post-form__label">Versão</label>
+                <input type="text" class="post-form__input" disabled id="title" name="title" placeholder="Escreva o título da notícia" value="<%= versao %>">
+              </div>
+              <div class="post-form__group">
+                <label for="" class="post-form__label">Host</label>
+                <input type="text" class="post-form__input" disabled id="title" name="title" placeholder="Escreva o título da notícia" value="<%= maquina %>">
+              </div>
+         </div>
+    </main>
+    <%- include('./partial/footer'); %>
+  </body>
+</html>
