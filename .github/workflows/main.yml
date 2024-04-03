@@ -29,8 +29,12 @@ jobs:
     needs: [CI]
     runs-on: ubuntu-latest
     steps:
-      - name: Conectar com o Kubernetes
-        run: echo "Configuração do Kubeconfig"
+      - name: Configuração do ambiente AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: "us-east-1"
+          aws-access-key-id: ${{secrets.AWS_ACCESS_KEY}}
+          aws-secret-access-key: ${{secrets.AWS_ACCESS_SECRET}}
       - name: Executar o deploy
         run: echo "Kubectl apply"
   
