@@ -29,13 +29,29 @@ jobs:
     needs: [CI]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4.1.2
+        name: Checkout do repositorio
       - name: Configuração do ambiente AWS
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-region: "us-east-1"
           aws-access-key-id: ${{secrets.AWS_ACCESS_KEY}}
           aws-secret-access-key: ${{secrets.AWS_ACCESS_SECRET}}
+      - name: Configuração do Kubeconfig
+        run: aws eks update-kubeconfig --name devops4devs-eks --region us-east-1
+      - name: Atualização do Manifesto
+        shell: bash
+        run: |
+          sed -i "s/{{AWS_ACCESS_KEY}}/${{ secrets.AWS_ACCESS_KEY }}/g" ./k8s/deploy.yaml
+          sed -i "s/{{AWS_ACCESS_SECRET}}/${{ secrets.AWS_ACCESS_SECRET }}/g" ./k8s/deploy.yaml
       - name: Executar o deploy
-        run: echo "Kubectl apply"
+        uses: Azure/k8s-deploy@v4.9
+        with:
+          manifests: |
+            ./k8s/deploy.yaml
+          images: |
+            fabricioveronez/devops4devs-news:${{github.run_number}}
+          
+        
   
   
