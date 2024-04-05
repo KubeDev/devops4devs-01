@@ -51,3 +51,7 @@ https://cloud.google.com
 ### Link para instalação do Azure CLI:
 
 https://cloud.google.com/sdk/docs/install?hl=pt-br
+
+# Aula 05 
+
+kubectl get secret --namespace default grafana -o jsonpath="{.data.admin-password}" | base64 --decode

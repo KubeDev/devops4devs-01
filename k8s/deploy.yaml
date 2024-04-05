@@ -47,10 +47,14 @@ spec:
     metadata:
       labels:
         app: web
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: "/metrics"
     spec:
       containers:
         - name: web
-          image: fabricioveronez/devops4devs-news:v3
+          image: fabricioveronez/devops4devs-news:v5
           ports:
             - containerPort: 8080
           env: 
@@ -63,11 +67,11 @@ spec:
             - name: DB_HOST
               value: postgre
             - name: AWS_ACCESS_KEY
-              value: {{AWS_ACCESS_KEY}}
+              value: AKIA5L3DP4PBT5CJBPKS
             - name: AWS_ACCESS_SECRET
-              value: {{AWS_ACCESS_SECRET}}
+              value: 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
             - name: AWS_S3_BUCKET_NAME
-              value: devops4devs-files
+              value: devops4devs-files-labs
             - name: STORAGE_TYPE
               value: S3
 ---
@@ -81,4 +85,5 @@ spec:
   ports:
     - port: 80
       targetPort: 8080
+      nodePort: 30000
   type: LoadBalancer
