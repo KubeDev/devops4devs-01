@@ -38,7 +38,7 @@ jobs:
         run: |
           git config --global user.name "Fabricio Veronez"
           git config --global user.email "fabricioveronez@gmail.com"
-          sed -i 's|fabricioveronez/devops4devs-news:*$|fabricioveronez/devops4devs-news:${{github.run_number}}|g' ./k8s/deploy.yaml
+          sed -i 's|fabricioveronez/devops4devs-news:*|fabricioveronez/devops4devs-news:${{github.run_number}}|g' ./k8s/deploy.yaml
           git add ./k8s
           git commit -m "Alteração para a imagem fabricioveronez/devops4devs-news:${{github.run_number}}"
           git push origin
