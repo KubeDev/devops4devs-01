@@ -5,6 +5,7 @@ on:
     branches: ["main", "feature/*"]
     paths: 
       - src/*
+      - .github/workflows/main.yml
   workflow_dispatch:
 
 jobs:
