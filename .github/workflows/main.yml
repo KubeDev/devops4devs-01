@@ -2,7 +2,7 @@ name: CI-CD
 
 on: 
   push:
-    branches: ["main"]
+    branches: ["main", "feature/*"]
     paths: 
       - src/*
   workflow_dispatch:
@@ -33,27 +33,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4.1.2
         name: Checkout do repositorio
-      - name: Configuração do ambiente AWS
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-region: "us-east-1"
-          aws-access-key-id: ${{secrets.AWS_ACCESS_KEY}}
-          aws-secret-access-key: ${{secrets.AWS_ACCESS_SECRET}}
-      - name: Configuração do Kubeconfig
-        run: aws eks update-kubeconfig --name devops4devs-eks --region us-east-1
-      - name: Atualização do Manifesto
-        shell: bash
+      - name: GitOps - Patch and push
         run: |
-          sed -i "s/{{AWS_ACCESS_KEY}}/${{ secrets.AWS_ACCESS_KEY }}/g" ./k8s/deploy.yaml
-          sed -i "s/{{AWS_ACCESS_SECRET}}/${{ secrets.AWS_ACCESS_SECRET }}/g" ./k8s/deploy.yaml
-      - name: Executar o deploy
-        uses: Azure/k8s-deploy@v4.9
-        with:
-          manifests: |
-            ./k8s/deploy.yaml
-          images: |
-            fabricioveronez/devops4devs-news:${{github.run_number}}
-          
-        
-  
-  
+          git -C pipeline.gitops config user.name "Fabricio Veronez"
+          git -C pipeline.gitops config user.email "fabricioveronez@gmail.com"
+          sed -i'.bak' -e 's|fabricioveronez/devops4devs-news:*$|fabricioveronez/devops4devs-news:${{github.run_number}}|g' ./k8s/deploy.yaml
+          git -C pipeline.gitops commit -am "Alteração para a imagem fabricioveronez/devops4devs-news:${{github.run_number}}"
+          git -C pipeline.gitops push origin
