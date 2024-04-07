@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: news
+spec:
+  project: default # Qual projeto a aplicação pertence, cada aplicação deve pertencer a um projeto.
+  
+  source: # Informações referentes ao repositório git
+    repoURL: https://github.com/fabricioveronez/devops4devs-01.git
+    targetRevision: HEAD
+    path: k8s/argocd # Diretório no repositório onde os manifestos se encontram
+  destination: # Informações referentes ao cluster de destino
+    server: https://kubernetes.default.svc
+    namespace: default
