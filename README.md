@@ -55,3 +55,11 @@ https://cloud.google.com/sdk/docs/install?hl=pt-br
 # Aula 05 
 
 kubectl get secret --namespace default grafana -o jsonpath="{.data.admin-password}" | base64 --decode
+
+# Aula de Encerramento
+
+### Comando pra obter a senha
+```
+kubectl get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+```
+
